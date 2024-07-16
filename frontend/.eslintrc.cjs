@@ -19,6 +19,8 @@ module.exports = {
     ],
     indent: ['error', 2], // Esta es la regla para la identacion (tabulacion)
     'semi': ['error', 'always'], // Esta es la regla para los puntos y comas
-    'quotes': ['error', 'single'] // Esta es la regla para las comillas simples
+    'quotes': ['error', 'single'], // Esta es la regla para las comillas simples
+    "react/prop-types": 0
+
   },
 }
