@@ -3,10 +3,6 @@ import mongoose from "mongoose";
 const listCollection = 'lists'
 
 const listSchema = mongoose.Schema({
-    owner: {
-        type: String,
-        ref: 'users'
-    },
     movies: {
         type: [
             {
