@@ -36,6 +36,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	overflow: auto;
+    height: 80%;
+	padding-right: 2em;
 }
 
 .checkbox-wrapper {

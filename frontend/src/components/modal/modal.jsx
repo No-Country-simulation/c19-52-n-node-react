@@ -29,6 +29,71 @@ export default function Modal({title='hola mundo', overview, closeModal = ()=>{}
                 <span className="custom-checkbox"></span>
                 Listado creado 3
               </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
+              <label className="checkbox-wrapper warning">
+                <input type="checkbox" />
+                <span className="custom-checkbox"></span>
+                Listado creado 3
+              </label>
               {/* 
               <p>{title}</p>
               <br />
