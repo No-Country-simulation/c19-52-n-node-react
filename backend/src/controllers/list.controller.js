@@ -1,4 +1,4 @@
-import { listsService } from "../repositories/index.js"
+import { listsService, moviesService } from "../repositories/index.js"
 
 export default class ListController{
     getListById = async (req, res) => {
@@ -14,5 +14,15 @@ export default class ListController{
 
     addMovieToList = async (req, res) => {
         const {lid, mid} = req.params
+
+        const movie = await moviesService.getMovie(mid)
+        if (!movie) {
+            return res.status(404).send({ error: 'Movie not found' })
+        }
+        const movieAdded = listsService.addMovie(lid, mid)
+        if (!movieAdded) {
+            return res.status(400).send({ error: 'Could not add movie to list' })
+        }
+        res.send({ message: 'Movie added to a list' })
     }
 }

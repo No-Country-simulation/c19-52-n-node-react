@@ -1,0 +1,11 @@
+<form action="/api/users/login" method="post">
+    <label>Email: </label> <input type="email" name="email" /> <br /><br /> 
+    <label>Password: </label> <input type="password" name="password" /> <br /><br /> 
+    <button>Log In</button>
+    <p>Don't have an account? <a href="/register">Register</a></p>
+    <p><a href="/restore-password">Forgot password?</a></p>
+</form>
+
+<form action="/api/users/logout" method="post">
+    <button type="submit">Log out</button>
+</form>
