@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import Modal from '../modal/modal';
+import './styles.scss';
 
-export const Film = ({title = 'Leo diCaprio', imgUrl = 'https://www.jolie.de/sites/default/files/styles/image_gallery360w/public/2020-02/leonardo-dicaprio-oscars.jpg?h=64dbc2fc&itok=EH0B3oo4', overview= '+12 movies' }) => {
+
+export const Film = ({ title = '', imgUrl = '', overview= '+12 movies' }) => {
   const [showModal, setShowModal] = useState(false);
   const guardar = () => {
     console.log(title);
     setShowModal(true);
   };
   const closeModal = () => {
-    
-    console.log('🚀 ~ closeModal ~ closeModal:');
     setShowModal(false);
   };
   return (
-    <><div className="relative rounded-xl overflow-hidden">
+    <><div className="relative rounded-xl overflow-hidden imagediv">
       <img src={imgUrl}
         className="object-cover h-full w-full -z-10" alt="" />
-      <div
-        className="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-between">
+      <div className="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-between hover-parent">
         <button className="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80" onClick={guardar}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20"
             fill="currentColor">
@@ -29,9 +28,10 @@ export const Film = ({title = 'Leo diCaprio', imgUrl = 'https://www.jolie.de/sit
 
         <div className="self-center flex flex-col items-center space-y-2">
           <span className="capitalize text-white font-medium drop-shadow-md">{title}</span>
-          <span className="text-gray-100 text-xs">{overview}</span>
-
         </div>
+        <div className="self-center flex flex-col items-center space-y-2 hover-children">
+          <span className="">{overview}</span>
+        </div> 
       </div>
     </div>
     {showModal && <Modal title={title} overview={overview} closeModal={closeModal} />}
