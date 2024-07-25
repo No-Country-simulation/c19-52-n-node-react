@@ -11,3 +11,37 @@ export const getMovies = () => {
     .then(response =>  response.json())
     .catch(err => console.error(err));
 };
+
+
+export const getSeries = () => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOTVlM2Q4NTEwNjJjMTNjN2Y2MDI0YzdmYTBkZGEzNCIsIm5iZiI6MTcyMTE1NDYzNi44NzM0NSwic3ViIjoiNjY5MmQ5Zjc5YjZmZGY2ZjExODkzYjYwIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.odIa4vwxgItLyEOoqz1dNWHnYPowisrpI_JSZaO7w2M'
+    }
+  };
+      
+  return fetch('https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=es-MX&page=1&sort_by=popularity.desc', options)
+    .then(response =>  response.json())
+    .catch(err => console.error(err));
+};
+
+export const getFilms = () => {
+  return Promise.all([getMovies(), getSeries()])
+    .then(([{ results: movies }, { results: series }]) => {
+      return {
+        movies,
+        series 
+      };
+    });
+};
+
+export const getTypeFilms = (type) => {
+  const typeSelected = type || 'movies';
+  const types = {
+    movies: getMovies,
+    series: getSeries
+  };
+  return types[typeSelected]();
+};

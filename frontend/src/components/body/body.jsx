@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
-import { getMovies } from '../hooks/filmsApi';
-import HeaderMobile from './common/headerMobile';
-import { Film } from './film/film';
-import Openning from './common/openning';
+import HeaderMobile from '../common/headerMobile';
+import { Film } from '../film/film';
+import Openning from '../common/openning';
+import { getTypeFilms } from '../../hooks/filmsApi';
+import { useSearchParams } from 'react-router-dom';
 
 
 export const Body = () => {
-  const [movies, setMovies] = useState([]);
-  const [ , setIsLoaded] = useState(false);
-  const [ , setError] = useState(null);
-  
+  const [searchParams, ] = useSearchParams();
+  const type = searchParams.get('t');
 
-  const updateMovies = async () => {
+  const [films, setFilms] = useState([]);
+  const [ isLoaded, setIsLoaded] = useState(false);
+  const [ , setError] = useState(null);
+
+
+  const updateFilms = async () => {
     try {
-      const {results} = await getMovies();
-      setMovies(results);
+      const { results } = await getTypeFilms(type);
+      setFilms(results);
       setIsLoaded(true);
     } catch (error) {
       setError(error);
@@ -23,7 +27,9 @@ export const Body = () => {
   };
   
   useEffect(() => {
-    updateMovies();
+    if (!isLoaded) {
+      updateFilms();
+    }
   }, []);
 
   return (
@@ -32,16 +38,15 @@ export const Body = () => {
         <HeaderMobile></HeaderMobile>
         <section>
           <nav className="flex space-x-6 text-gray-400 font-medium">
-            <a href="#" className="hover:text-gray-700 dark:hover:text-white">TV Series</a>
-            <a href="#" className="text-gray-700 dark:text-white font-semibold">Movies</a>
-            <a href="#" className="hover:text-gray-700 dark:hover:text-white ">Animes</a>
+            <a href="/" className="hover:text-gray-700 dark:hover:text-white">Peliculas</a>
+            <a href="/?t=series" className="text-gray-700 dark:text-white font-semibold">Series</a>
           </nav>
           <Openning></Openning>
         </section>
         <div className="mt-4 grid grid-cols-2  sm:grid-cols-4 gap-x-5 gap-y-5">
-          {movies && movies.map((movie) => {
-            const {id, title = '', poster_path ='', overview = ''} = movie;
-            return <Film key={id} title={title} imgUrl={`https://image.tmdb.org/t/p/w300${poster_path}`} overview={overview} ></Film>;
+          {films && films.map((movie) => {
+            const { id, title = '', name= '', poster_path ='', overview = '' } = movie;
+            return <Film key={id} canAdd title={title || name } imgUrl={`https://image.tmdb.org/t/p/w300${poster_path}`} overview={overview} ></Film>;
           })}
         </div>
 

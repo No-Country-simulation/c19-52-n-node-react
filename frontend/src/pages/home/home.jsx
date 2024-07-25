@@ -1,6 +1,7 @@
-import Body from '../../components/body';
-import { Menu } from '../../components/menu';
-import { Others } from '../../components/others';
+import Body from '../../components/body/body';
+import Menu from '../../components/menu/menu';
+import Others from '../../components/others/others';
+
 
 export const Home = () => {
   return (
