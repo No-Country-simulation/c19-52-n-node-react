@@ -19,9 +19,9 @@ export default class ListMongo {
         }
     }
 
-    async create(){
+    async create(title){
         try {
-            const result = await listModel.create({})
+            const result = await listModel.create({title})
             return result
         } catch (error) {
             console.log(error)
