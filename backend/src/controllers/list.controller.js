@@ -8,7 +8,11 @@ export default class ListController{
     }
 
     createList = async (req, res) => {
-        const list = await listsService.createList()
+        const {title} = req.body
+        if(!title){
+            return res.status(400).send({error: "List must have a title"})
+        }
+        const list = await listsService.createList(title)
         res.status(201).send({message: 'List created', payload:list})
     }
 

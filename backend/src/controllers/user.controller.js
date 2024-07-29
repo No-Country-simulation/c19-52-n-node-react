@@ -36,8 +36,8 @@ export default class UserController {
 
         try {
             const user = await usersService.getUserByEmail(email)
-            if (!user) res.status(400).send({message: `Usuario con email ${email} existe`})
-            if (!isValidPassword(user, password)) res.status(400).send({message: `Contraseña incorrecta`})
+            if (!user) return res.status(400).send({message: `Usuario con email ${email} existe`})
+            if (!isValidPassword(user, password)) return res.status(400).send({message: `Contraseña incorrecta`})
             const safeUser = {
                 first_name: user.first_name,
                 last_name: user.last_name,
