@@ -1,6 +1,6 @@
 
 import './styles.scss';
-export default function Modal({title='hola mundo', overview, closeModal = ()=>{}}) {
+export default function Modal({ title='hola mundo', closeModal = ()=>{} }) {
 
   return (
     <>

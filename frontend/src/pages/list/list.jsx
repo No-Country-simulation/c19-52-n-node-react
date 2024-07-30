@@ -3,12 +3,13 @@ import { Film } from '../../components/film/film';
 import Menu from '../../components/menu/menu';
 import Others from '../../components/others/others';
 import { getMovies } from '../../hooks/filmsApi';
+// import { useParams } from 'react-router-dom';
 
 export const List = () => {
   const [movies, setMovies] = useState([]);
   const [ , setIsLoaded] = useState(false);
   const [ , setError] = useState(null);
-  
+  // const { id }=useParams();
   const updateMovies = async () => {
     try {
       const { results } = await getMovies();
@@ -32,9 +33,8 @@ export const List = () => {
         <main className=" flex-1 py-10  px-5 sm:px-10 ">
           <section className="mt-9">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-gray-700 text-base dark:text-white">Tu listado</span>
+              <span className="font-semibold text-gray-700 text-base dark:text-white">Listado 1</span>
             </div>
-
             <div className="mt-4 grid grid-cols-2  sm:grid-cols-4 gap-x-5 gap-y-5">
               {movies && movies.map((movie) => {
                 const { id, title = '', overview = '', poster_path ='' } = movie;

@@ -1123,7 +1123,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .font-semibold {
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .uppercase {
@@ -1401,6 +1401,9 @@ Ensure the default browser behavior of the `hidden` attribute.
     --tw-text-opacity: 1;
     color: rgb(255 255 (255 / var(--tw-text-opacity)));
   }
+  body {
+    background-color: rgb(24 24 27);
+  }
 }
 
 @media (min-width: 350px) {
@@ -1510,4 +1513,19 @@ Ensure the default browser behavior of the `hidden` attribute.
     --tw-border-opacity: 1;
     border-color: rgb(63 63 (70 / var(--tw-border-opacity)));
   }
+}
+.title {
+  font-size: 2em;
+}
+.list-card {
+display: flex;
+flex-wrap:wrap;
+
+}
+.image-list-card {
+width: 50%;
+height: 40%;
+img {
+  height: 100%;
+}
 }

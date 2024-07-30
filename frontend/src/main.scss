@@ -1,3 +1,7 @@
 @import '../src/pages/template/template.scss'; // solo en /template
 //@import './App.scss'; // solo en home "/"
 //@import './index.scss'
+
+.svg-login {
+    transform: rotate(180deg);
+}
