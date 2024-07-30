@@ -6,7 +6,6 @@ import './styles.scss';
 export const Film = ({ title = '', imgUrl = '', overview= '+12 movies' }) => {
   const [showModal, setShowModal] = useState(false);
   const guardar = () => {
-    console.log(title);
     setShowModal(true);
   };
   const closeModal = () => {

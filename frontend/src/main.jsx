@@ -5,6 +5,8 @@ import './main.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/home.jsx';
 import List from './pages/list/list.jsx';
+import YourList from './pages/yourList/yourList.jsx';
+import Login from './pages/login/login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -12,8 +14,16 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/ver-listados',
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/ver-lista/:id',
     element: <List />,
+  },
+  {
+    path: '/tus-listas',
+    element: <YourList />,
   },
   {
     path: '*',
