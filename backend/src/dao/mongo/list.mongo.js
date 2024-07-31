@@ -43,8 +43,12 @@ export default class ListMongo {
 
     async update(id, values){
         try {
-            const update = await productModel.updateOne({ _id: id }, {$set: values})
-            update.matchedCount > 0 ? true : false
+            const update = await listModel.updateOne({ _id: id }, {$set: values})
+            if (update.matchedCount > 0) {
+                return true
+            } else {
+                return false
+            }
         } catch (error) {
             return null
         }
@@ -53,7 +57,11 @@ export default class ListMongo {
     async delete(id){
         try {
             const result = await listModel.deleteOne({_id: id})
-            result.deletedCount > 0 ? true : false
+            if (result.matchedCount > 0) {
+                return true
+            } else {
+                return false
+            }
         } catch (error) {
             return null
         }

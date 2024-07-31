@@ -17,6 +17,11 @@ const listSchema = mongoose.Schema({
             }
         ],
         default: []
+    },
+    visibility: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'private'
     }
 })
 
