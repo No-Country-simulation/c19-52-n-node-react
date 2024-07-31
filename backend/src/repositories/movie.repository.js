@@ -4,5 +4,5 @@ export default class MovieRepository {
     }
 
     getMovie = async (id) => await this.dao.getById(id)
-    saveMovie = async (movie) => await this.dao.create(movie)
+    saveMovie = async (movie) => await this.dao.saveMovie(movie)
 }
