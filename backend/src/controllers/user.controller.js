@@ -39,6 +39,7 @@ export default class UserController {
             if (!user) return res.status(400).send({message: `Usuario con email ${email} existe`})
             if (!isValidPassword(user, password)) return res.status(400).send({message: `Contraseña incorrecta`})
             const safeUser = {
+                id: user._id,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,

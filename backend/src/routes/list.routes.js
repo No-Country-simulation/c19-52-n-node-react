@@ -6,6 +6,7 @@ const controller = new ListController()
 
 const listRouter = Router()
 
+listRouter.get('/', authToken, controller.getListsByUser)
 listRouter.get('/:lid', controller.getListById)
 listRouter.post('/', authToken, controller.createList)
 listRouter.post('/private/:lid', authToken, controller.changeToPrivate)

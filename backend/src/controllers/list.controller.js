@@ -1,4 +1,4 @@
-import { listsService, moviesService } from "../repositories/index.js"
+import { listsService, moviesService, usersService } from "../repositories/index.js"
 
 export default class ListController{
     getListById = async (req, res) => {
@@ -7,12 +7,28 @@ export default class ListController{
         res.send({payload: list})
     }
 
+    getListsByUser = async (req, res) => {
+        const {user} = req.session
+        const {userId} = req.query
+
+        if(user.id === userId){
+            const lists = await listsService.getLists({owner: userId})
+            return res.send({message: 'Ok', payload: lists})
+        }
+        res.status(403).send({error: 'Forbidden'})
+    }
+
     createList = async (req, res) => {
         const {title} = req.body
+        const {user} = req.session
+
         if(!title){
             return res.status(400).send({error: "List must have a title"})
         }
-        const list = await listsService.createList(title)
+        const list = await listsService.createList(title, user.id)
+        const result = await usersService.addListToUser(user.email, list._id)
+        if(!result) return res.status(400).send({error: "Something went wrong"})
+
         res.status(201).send({message: 'List created', payload:list})
     }
 

@@ -24,7 +24,7 @@ export default class UsersMongo {
 
     async getUserById(id){
         try {
-            const user = await userModel.findOne({_id: id})
+            const user = await userModel.findOne({_id: id}).populate('lists.list')
             return user
         } catch (error) {
             console.error(error)
@@ -52,6 +52,18 @@ export default class UsersMongo {
             }
         } catch (error) {
             console.log(error)
+            return null
+        }
+    }
+
+    async addList(email, list) {
+        try {
+            const user = await this.getUserByEmail(email)
+            user.lists.push(list)
+            await user.save()
+            return true
+        } catch (error) {
+            console.error(error.message)
             return null
         }
     }

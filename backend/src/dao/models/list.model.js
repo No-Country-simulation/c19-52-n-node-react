@@ -22,6 +22,10 @@ const listSchema = mongoose.Schema({
         type: String,
         enum: ['public', 'private'],
         default: 'private'
+    },
+    owner: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'users'
     }
 })
 
