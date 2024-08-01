@@ -22,6 +22,11 @@ export default class ListController{
         if (!movie) {
             return res.status(404).send({ error: 'Movie not found' })
         }
+        const list = await listsService.getOneList(lid)
+        const movieIsInList = list.movies.find(m => m.movie.equals(mid))
+        if(movieIsInList){
+            return res.status(404).send({error: "Movie was already in the list"})
+        }
         const movieAdded = listsService.addMovie(lid, mid)
         if (!movieAdded) {
             return res.status(400).send({ error: 'Could not add movie to list' })
