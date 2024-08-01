@@ -9,4 +9,5 @@ export default class ListRepository {
     addMovie = async(lid, mid) => await this.dao.addMovie(lid, mid)
     updateList = async (lid, values) => await this.dao.update(lid, values)
     deleteList = async (lid) => await this.dao.delete(lid)
+    removeMovieInList = async (lid, mid) => await this.dao.removeMovieInList(lid, mid)
 }

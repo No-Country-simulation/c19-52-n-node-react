@@ -18,7 +18,6 @@ export default class ListController{
 
     addMovieToList = async (req, res) => {
         const {lid, mid} = req.params
-
         const movie = await moviesService.getMovie(mid)
         if (!movie) {
             return res.status(404).send({ error: 'Movie not found' })
@@ -60,5 +59,23 @@ export default class ListController{
             return res.status(400).send({error: 'Could not change its visibility'})
         }
         res.send({message: `List is PUBLIC now`})
+    }
+
+    removeMovieInList = async (req, res) => {
+        const { lid, mid } = req.params;
+        const result = await listsService.removeMovieInList(lid, mid)
+        if (!result) {
+            return res.status(400).send({error: "Cound not remove movie from list"})
+        }
+        res.send({ message: 'Movie removed' })
+    }
+    
+    deleteList = async (req, res) => {
+        const {lid} = req.params
+        const result = await listsService.deleteList(lid)
+        if(!result) {
+            return res.status(400).send({error: "Could not delete list"})
+        }
+        res.send({message: 'Deleted'})
     }
 }
