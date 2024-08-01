@@ -2,9 +2,9 @@ import mongoose from "mongoose"
 import { listModel } from "../models/list.model.js"
 
 export default class ListMongo {
-    async get(id){
+    async get(filter){
         try {
-            const lists = await listModel.find()
+            const lists = await listModel.find(filter).populate('movies.movie')
             return lists
         } catch (error) {
             console.log(error)
@@ -14,7 +14,7 @@ export default class ListMongo {
 
     async getById(id) {
         try {
-            const list = await listModel.findOne({_id: id}).populate('movies') //TODO
+            const list = await listModel.findOne({_id: id}).populate('movies.movie')
             return list
         } catch (error) {
             console.log(error)
@@ -22,9 +22,9 @@ export default class ListMongo {
         }
     }
 
-    async create(title){
+    async create(title, uid){
         try {
-            const result = await listModel.create({title})
+            const result = await listModel.create({title, owner: new mongoose.Types.ObjectId(uid)})
             return result
         } catch (error) {
             console.log(error)
