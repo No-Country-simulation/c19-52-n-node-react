@@ -60,8 +60,8 @@ export const Body = () => {
         </section>
         <div className="mt-4 grid grid-cols-2  sm:grid-cols-4 gap-x-5 gap-y-5">
           {films && films.map((movie) => {
-            const { id, title = '', name= '', poster_path ='', overview = '' } = movie;
-            return <Film key={id} canAdd title={title || name } imgUrl={`https://image.tmdb.org/t/p/w300${poster_path}`} overview={overview} ></Film>;
+            const { id, title = '', name= '', poster_path ='', overview = '', genre_ids: genreIds = [] } = movie;
+            return <Film key={id} canAdd title={title || name } genreIds={genreIds} imgUrl={`https://image.tmdb.org/t/p/w300${poster_path}`} overview={overview} ></Film>;
           })}
         </div>
       </main></>

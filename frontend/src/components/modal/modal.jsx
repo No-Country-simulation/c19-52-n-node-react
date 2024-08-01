@@ -1,12 +1,14 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getCookie } from '../../utils/cookies';
 import './styles.scss';
-import { getYourLists } from '../../hooks/listsApi';
-export default function Modal({ title='hola mundo', closeModal = ()=>{} }) {
+import { getYourLists, saveFilm, saveInList } from '../../hooks/listsApi';
+import { getGenerics } from '../../data/genre';
+export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, closeModal = ()=>{} }) {
   const isLogged = getCookie('access_token');
   const [ lists, setLists] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); 
+  const [checklist, setChecklist] = useState({});
 
   const getListOfUser = async () => {
     try {
@@ -23,7 +25,42 @@ export default function Modal({ title='hola mundo', closeModal = ()=>{} }) {
     getListOfUser();
   }
   
+  const saveList = async () => {
+    const trueIdsArray = [];
+    const falseIdsArray = [];
 
+    Object.keys(checklist).forEach(key => {
+      if (checklist[key]) {
+        trueIdsArray.push(key);
+      } else {
+        falseIdsArray.push(key);
+      }
+    });
+
+    try {
+      const { payload } = await saveFilm({
+        title, description:overview, thumbnail: imgUrl, category: getGenerics(genreIds)
+      });
+
+      if(trueIdsArray.length > 0) {
+        const { _id: idFilm } = payload;
+        const [idList] = trueIdsArray;
+              
+        await saveInList({ idFilm, idList });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+
+  };
+
+  
+  const handleInputChange = (e) => {
+    const { name, checked } = e.target;
+    setChecklist({ ...checklist, [name]: checked });
+  };
+  
   return (
     <>
       <div id="modal">
@@ -37,14 +74,14 @@ export default function Modal({ title='hola mundo', closeModal = ()=>{} }) {
               {lists.map(({ _id:id, title }) => {
                 return (
                   <label key={id} className="checkbox-wrapper secondary">
-                    <input type="checkbox" />
-                    <span className="custom-checkbox"></span>
+                    <input type="checkbox" name={id} value=''onChange={handleInputChange}/>
+                    <span className="custom-checkbox"> </span>
                     {title}
                   </label>
                 );  
               })}
               <div className="input-wrapper primary">
-                <button className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Guardar</button>
+                <button onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Guardar</button>
               </div>
             </div>}
             {!isLogged && 

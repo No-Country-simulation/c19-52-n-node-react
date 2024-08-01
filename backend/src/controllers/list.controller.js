@@ -39,7 +39,7 @@ export default class ListController{
             return res.status(404).send({ error: 'Movie not found' })
         }
         const list = await listsService.getOneList(lid)
-        const movieIsInList = list.movies.find(m => m.movie.equals(mid))
+        const movieIsInList = list.movies.find(m => m?.movie?.equals(mid))
         if(movieIsInList){
             return res.status(404).send({error: "Movie was already in the list"})
         }

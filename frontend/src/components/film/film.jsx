@@ -3,7 +3,7 @@ import Modal from '../modal/modal';
 import './styles.scss';
 
 
-export const Film = ({ title = '', imgUrl = '', overview= '+12 movies' }) => {
+export const Film = ({ title = '', genreIds=[], imgUrl = '', overview= '+12 movies' }) => {
   const [showModal, setShowModal] = useState(false);
   const guardar = () => {
     setShowModal(true);
@@ -33,7 +33,7 @@ export const Film = ({ title = '', imgUrl = '', overview= '+12 movies' }) => {
         </div> 
       </div>
     </div>
-    {showModal && <Modal title={title} overview={overview} closeModal={closeModal} />}
+    {showModal && <Modal title={title} overview={overview} genreIds={genreIds} imgUrl={imgUrl} closeModal={closeModal} />}
     </>
   );
 };

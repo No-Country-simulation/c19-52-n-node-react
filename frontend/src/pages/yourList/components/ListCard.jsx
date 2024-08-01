@@ -20,14 +20,14 @@ export const ListCard = ({ name='', movies= [] }) => {
         </div>
       </>;
     }
-    return movies.map(({ id, poster_path }) => {
+    return movies.map(({ movie }) => {
+      const { id, thumbnail } = movie || {};
       return (
         <div key={id} className='image-list-card'>
-          <img src={`https://image.tmdb.org/t/p/w154/${poster_path}`}
+          <img src={thumbnail}
             className="object-cover w-full" alt="" />
         </div>
       )
-
       ;
     });
   };
