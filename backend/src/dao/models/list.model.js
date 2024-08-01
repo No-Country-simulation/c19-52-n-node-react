@@ -11,7 +11,7 @@ const listSchema = mongoose.Schema({
         type: [
             {
                 movie: {
-                    type: String,
+                    type: mongoose.Schema.ObjectId,
                     ref: 'movies'
                 }
             }

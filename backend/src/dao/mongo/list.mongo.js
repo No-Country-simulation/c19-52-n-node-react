@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { listModel } from "../models/list.model.js"
 
 export default class ListMongo {
@@ -6,6 +7,7 @@ export default class ListMongo {
             const lists = await listModel.find()
             return lists
         } catch (error) {
+            console.log(error)
             return null
         }
     }
@@ -15,7 +17,8 @@ export default class ListMongo {
             const list = await listModel.findOne({_id: id}).populate('movies') //TODO
             return list
         } catch (error) {
-            return error
+            console.log(error)
+            return null
         }
     }
 
@@ -37,6 +40,7 @@ export default class ListMongo {
             await list.save()
             return true
         } catch (error) {
+            console.log(error)
             return null
         }
     }
@@ -50,6 +54,7 @@ export default class ListMongo {
                 return false
             }
         } catch (error) {
+            console.log(error)
             return null
         }
     }
@@ -57,15 +62,30 @@ export default class ListMongo {
     async delete(id){
         try {
             const result = await listModel.deleteOne({_id: id})
-            if (result.matchedCount > 0) {
+            if (result.deletedCount > 0) {
                 return true
             } else {
                 return false
             }
         } catch (error) {
+            console.log(error)
             return null
         }
     }
 
-    //TODO delete movie from list
+    async removeMovieInList(lid, mid){
+        try {
+            const list = await listModel.updateOne({_id: lid}, {
+                $pull: {movies : {movie: new mongoose.Types.ObjectId(mid)}}
+            })
+            if(list.modifiedCount > 0){
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
 }
