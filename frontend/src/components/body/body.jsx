@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import HeaderMobile from '../common/headerMobile';
 import { Film } from '../film/film';
 import Openning from '../common/openning';
-import { getTypeFilms } from '../../hooks/filmsApi';
+import { getTypeFilms, searchFilm } from '../../hooks/filmsApi';
 import { useSearchParams } from 'react-router-dom';
-
 
 export const Body = () => {
   const [searchParams, ] = useSearchParams();
@@ -25,7 +24,18 @@ export const Body = () => {
       setIsLoaded(false);
     }
   };
-  
+  const searchFilms = async({ by, input }) => {
+    const typeCurrent = type || 'movies';
+    try {
+      const { results } = await searchFilm({ by, type:typeCurrent, input });
+      setFilms(results);
+      setIsLoaded(true);
+    } catch (error) {
+      setError(error);
+      setIsLoaded(false);
+    }
+    
+  };
   const semibold = (typeNavbar) => {
     const typeCurrent = type || 'movies';
     return typeNavbar === typeCurrent ? 'font-semibold': 'hover:text-gray-700 dark:hover:text-white'; 
@@ -46,7 +56,7 @@ export const Body = () => {
             <a href="/" className={`text-gray-700 dark:text-white  ${semibold('movies')}`}>Peliculas</a>
             <a href="/?t=series" className={`text-gray-700 dark:text-white  ${semibold('series')}`}>Series</a>
           </nav>
-          <Openning></Openning>
+          <Openning searchFilms={searchFilms}></Openning>
         </section>
         <div className="mt-4 grid grid-cols-2  sm:grid-cols-4 gap-x-5 gap-y-5">
           {films && films.map((movie) => {

@@ -1,24 +1,41 @@
-export const ListCard = ({ name='' }) => {
-  return (
-    <a href="/ver-lista/asd">
-      <div className='list-card flex flex-row rounded-xl overflow-hidden aspect-square border dark:border-zinc-600'>
+export const ListCard = ({ name='', movies= [] }) => {
+  const renderImages = () => {
+    if (movies.length === 0) {
+      return <>
         <div className='image-list-card'>
-          <img src="https://image.tmdb.org/t/p/w154/5jI2vEHJReAx8iFDmhC2O3yW37w.jpg"
+          <img src="/images/vacio.png"
             className="object-cover w-full  " alt="" />
         </div>
         <div className='image-list-card'> 
-          <img src="https://image.tmdb.org/t/p/w154/aCw8ONfyz3AhngVQa1E2Ss4KSUQ.jpg"
+          <img src="/images/vacio.png"
             className="object-cover w-full  " alt="" />
         </div>
-                
         <div className='image-list-card'> 
-          <img src="https://image.tmdb.org/t/p/w154/aQnbNiadeGzGSjWLaXyeNxpAUIx.jpg"
+          <img src="/images/vacio.png"
             className=" object-cover w-full  " alt="" />
         </div>
         <div className='image-list-card'>
-          <img src="https://image.tmdb.org/t/p/w154/9TFSqghEHrlBMRR63yTx80Orxva.jpg"
+          <img src="/images/vacio.png"
             className=" object-cover w-full  " />
         </div>
+      </>;
+    }
+    return movies.map(({ id, poster_path }) => {
+      return (
+        <div key={id} className='image-list-card'>
+          <img src={`https://image.tmdb.org/t/p/w154/${poster_path}`}
+            className="object-cover w-full" alt="" />
+        </div>
+      )
+
+      ;
+    });
+  };
+  
+  return (
+    <a href="/ver-lista/asd">
+      <div className='list-card flex flex-row rounded-xl overflow-hidden aspect-square border dark:border-zinc-600'>
+        {renderImages()}
         <div
           className="w-full h-1/5 bg-white dark:bg-zinc-800 dark:text-white px-3 flex items-center justify-between border-t-2 border-t-red-600">
           <span className="capitalize  font-medium truncate">{name}</span>
