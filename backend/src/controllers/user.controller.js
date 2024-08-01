@@ -47,7 +47,7 @@ export default class UserController {
             }
             const token = generateToken(safeUser)
             res.cookie('access_token', token, {
-                httpOnly: true,
+                httpOnly: false,
                 maxAge: 1000 * 60 *60
             }).send({payload:safeUser})
         } catch (error) {

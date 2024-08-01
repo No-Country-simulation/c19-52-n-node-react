@@ -8,12 +8,17 @@ import userRouter from './routes/user.routes.js';
 import listRouter from './routes/list.routes.js';
 import movieRouter from './routes/movie.routes.js';
 
-const {PORT, MONGO_URL} = getVariables()
+const {PORT, MONGO_URL, FRONT_URL} = getVariables()
 
 const app = express()
 mongoose.connect(MONGO_URL)
 
-app.use(cors())
+app.use(cors(
+      {
+        origin: FRONT_URL,
+        credentials: true,
+      }
+))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))

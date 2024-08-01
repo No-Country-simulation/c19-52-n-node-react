@@ -1,14 +1,27 @@
 import { useLocation } from 'react-router-dom';
 import ModalLogin from '../modal-login/modal-login';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { login, logout } from '../../hooks/userApi';
+import { getCookie } from '../../utils/cookies';
 
 export const Menu = () => {
   const [showModal, setShowLogin] = useState(false);
-  
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [isLogged, setIsLogged] = useState(false);
   const { pathname } = useLocation();
   const section = pathname.split('/');
   const currentSection = section[1] || 'inicio';
   const theme = localStorage.getItem('theme');
+  
+
+  useEffect(() => {
+    const accessToken = getCookie('access_token');
+    if (accessToken) {
+      setIsLogged(true);
+    }
+
+  }, []);
   
   if(theme) {
     window.document.getElementsByTagName('html')[0].className = theme;
@@ -32,13 +45,55 @@ export const Menu = () => {
   };
 
   const openModal = () => {
+    setError('');
     setShowLogin(true);
   };
 
   const closeLogin = () => {
     setShowLogin(false);    
   };
+  const getCurrent = async() => {
+    try {
+      const isLogged = getCookie('access_token');
+      if (!isLogged) {
+        setUser('none');
+      }
+    } catch (error) {
+      console.error('Error catch getCurrent', error);
+    }
+  };
 
+  const loginUser = async({ email, password }) => {
+    setError('');
+    try {
+      const { payload } = await login({ email, password });
+
+      if (payload) {
+        setUser(payload.id);
+        localStorage.setItem('idUser', payload.id);
+        window.location = '/';
+        setShowLogin(false);
+      }
+    } catch (error) {
+      setError('Error no se pudo iniciar usuario, revise email y contraseña.');
+      console.log('🚀 :', error.message);
+    } 
+  };
+
+  const logoutUser = async () => {
+    try {
+      await logout();
+      window.location = '/';
+      setUser('');
+    } catch (error) {
+      setError('Error no se pudo iniciar usuario, revise email y contraseña.');
+      console.log('🚀 :', error.message);
+    } 
+  };
+
+  if (!user) {
+    getCurrent();
+  }
 
   return (
     <aside className=" w-1/6 py-10 pl-10  min-w-min  border-r border-gray-300 dark:border-zinc-700  hidden md:block ">
@@ -97,6 +152,7 @@ export const Menu = () => {
           </svg>
           <span>Ajustes</span>
         </a>
+        { !isLogged && 
         <a onClick={openModal} className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white"
           href="#">
           <svg className="dark:fill-white h-5 w-5 group-hover:fill-red-600 svg-login " xmlns="http://www.w3.org/2000/svg"
@@ -109,20 +165,21 @@ export const Menu = () => {
             </g>
           </svg>
           <span>Iniciar sesión</span>
-        </a>
-        <a onClick={openModal} className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white"
-          href="#">
-          <svg className="dark:fill-white h-5 w-5 group-hover:fill-red-600 " xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24">
-            <g>
-              <path d="M16 13v-2H7V8l-5 4 5 4v-3Z"></path>
-              <path
-                d="M20 3h-9c-1.11 0-2 .89-2 2v4h2V5h9v14h-9v-4H9v4c0 1.1.89 2 2 2h9c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2Z">
-              </path>
-            </g>
-          </svg>
-          <span>Cerrar sesión</span>
-        </a>
+        </a>}
+        { isLogged && 
+         <a onClick={logoutUser} className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white"
+           href="#">
+           <svg className="dark:fill-white h-5 w-5 group-hover:fill-red-600 " xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24">
+             <g>
+               <path d="M16 13v-2H7V8l-5 4 5 4v-3Z"></path>
+               <path
+                 d="M20 3h-9c-1.11 0-2 .89-2 2v4h2V5h9v14h-9v-4H9v4c0 1.1.89 2 2 2h9c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2Z">
+               </path>
+             </g>
+           </svg>
+           <span>Cerrar sesión</span>
+         </a>}
         <a className=" flex items-center space-x-2 py-1 mt-4" href="#">
           <div
             className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
@@ -136,7 +193,7 @@ export const Menu = () => {
           </div>
           <label htmlFor="toggle" className="">Modo oscuro</label>
         </a>
-        {showModal && <ModalLogin closeModal={closeLogin}/>}
+        {showModal && <ModalLogin error={error} loginUser={loginUser} closeModal={closeLogin}/>}
 
       </div>
 
