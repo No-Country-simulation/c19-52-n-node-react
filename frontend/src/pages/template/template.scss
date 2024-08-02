@@ -1533,3 +1533,20 @@ img {
   height: 100%;
 }
 }
+
+.button-delete {
+  height: 70%;
+  width: 15%;
+  display: flex;
+  justify-content: center;
+}
+*:disabled {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}
+*:disabled:hover {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}

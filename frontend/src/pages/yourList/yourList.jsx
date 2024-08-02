@@ -48,7 +48,7 @@ export const YourList = () => {
     }
     return lists.map(({ _id: id, title, movies }) => {
 
-      return (<ListCard key={id} name={title} movies={movies} />);
+      return (<ListCard key={id} idList={id} name={title} movies={movies} />);
     });
   };
   useEffect(() => {

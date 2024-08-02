@@ -4,16 +4,17 @@ import { getCookie } from '../../utils/cookies';
 import './styles.scss';
 import { getYourLists, saveFilm, saveInList } from '../../hooks/listsApi';
 import { getGenerics } from '../../data/genre';
+
 export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, closeModal = ()=>{} }) {
   const isLogged = getCookie('access_token');
   const [ lists, setLists] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); 
-  const [checklist, setChecklist] = useState({});
+  const [listSelected, setListSelected] = useState('');
+  console.log('🚀 ~ file: modal.jsx:13 ~ listSelected:', listSelected)
 
   const getListOfUser = async () => {
     try {
       const { payload } = await getYourLists();
-      console.log('🚀 ~ file: modal.jsx:13 ~ payload:', payload);
       setLists(payload);
       setIsLoaded(true);
     } catch (error) {
@@ -26,28 +27,14 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   }
   
   const saveList = async () => {
-    const trueIdsArray = [];
-    const falseIdsArray = [];
-
-    Object.keys(checklist).forEach(key => {
-      if (checklist[key]) {
-        trueIdsArray.push(key);
-      } else {
-        falseIdsArray.push(key);
-      }
-    });
-
     try {
       const { payload } = await saveFilm({
         title, description:overview, thumbnail: imgUrl, category: getGenerics(genreIds)
       });
-
-      if(trueIdsArray.length > 0) {
-        const { _id: idFilm } = payload;
-        const [idList] = trueIdsArray;
-              
-        await saveInList({ idFilm, idList });
-      }
+      const { _id: idFilm } = payload;
+      console.log('🚀 ~ file: modal.jsx:34 ~ idFilm:', idFilm);
+      await saveInList({ idFilm, idList: listSelected });
+      window.location = '/';
     } catch (error) {
       console.error(error);
     }
@@ -57,8 +44,7 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
 
   
   const handleInputChange = (e) => {
-    const { name, checked } = e.target;
-    setChecklist({ ...checklist, [name]: checked });
+    setListSelected(e.target.value);
   };
   
   return (
@@ -69,19 +55,19 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
           <div className="main-container">
             
             {isLogged && 
-            <div className="checkbox-container">
+            <div className="select-container">
               <h1>Donde guardar: {title}</h1>
-              {lists.map(({ _id:id, title }) => {
-                return (
-                  <label key={id} className="checkbox-wrapper secondary">
-                    <input type="checkbox" name={id} value=''onChange={handleInputChange}/>
-                    <span className="custom-checkbox"> </span>
-                    {title}
-                  </label>
-                );  
-              })}
+              <div className="custom-select-wrapper">
+                <select className="custom-select primary" name='list' onChange={handleInputChange}>
+                  <option value='' selected disabled>Seleccione lista</option>
+                  {lists.map(({ _id:id, title }) => {
+                    return (<option key={id} value={id}>{title}</option>);
+                  })
+                  }
+                </select>
+              </div>
               <div className="input-wrapper primary">
-                <button onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Guardar</button>
+                <button disabled={!listSelected} onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white ">Guardar</button>
               </div>
             </div>}
             {!isLogged && 
@@ -90,7 +76,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
               <button onClick={() => closeModal()} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Entendido</button>
             </div>}
 
-            
           </div>
         </div>
 

@@ -77,3 +77,58 @@ export const saveInList = async ({ idList, idFilm }) => {
   }
   return data;
 };
+
+export const getList = async ({ idList }) => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/${idList}`;
+      
+  const response = await fetch(url, {
+    method: 'GET',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+      
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};
+  
+
+export const deleteFilmOFList = async ({ idList, idFilm }) => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/${idList}/movie/${idFilm}`;
+
+  const response = await fetch(url, {
+    method: 'DELETE',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+    
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};
+
+export const deleteList = async ({ idList }) => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/${idList}/`;
+
+  const response = await fetch(url, {
+    method: 'DELETE',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+    
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};

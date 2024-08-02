@@ -2,18 +2,20 @@ import { useEffect, useState } from 'react';
 import { Film } from '../../components/film/film';
 import Menu from '../../components/menu/menu';
 import Others from '../../components/others/others';
-import { getMovies } from '../../hooks/filmsApi';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { getList } from '../../hooks/listsApi';
 
 export const List = () => {
   const [movies, setMovies] = useState([]);
+  const [title, setTitle] = useState('');
   const [ , setIsLoaded] = useState(false);
   const [ , setError] = useState(null);
-  // const { id }=useParams();
+  const { id:idList }=useParams();
   const updateMovies = async () => {
     try {
-      const { results } = await getMovies();
-      setMovies(results);
+      const { payload } = await getList({ idList });
+      setMovies(payload?.movies);
+      setTitle(payload?.title);
       setIsLoaded(true);
     } catch (error) {
       setError(error);
@@ -33,12 +35,13 @@ export const List = () => {
         <main className=" flex-1 py-10  px-5 sm:px-10 ">
           <section className="mt-9">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-gray-700 text-base dark:text-white">Listado 1</span>
+              <span className="font-semibold text-gray-700 text-base dark:text-white">{title}</span>
             </div>
             <div className="mt-4 grid grid-cols-2  sm:grid-cols-4 gap-x-5 gap-y-5">
-              {movies && movies.map((movie) => {
-                const { id, title = '', overview = '', poster_path ='' } = movie;
-                return <Film key={id} title={title} imgUrl={`https://image.tmdb.org/t/p/w300${poster_path}`} overview={overview}></Film>;
+              {movies?.length === 0 && <p className='font-semibold text-gray-700 text-base dark:text-white'>Aun no tienes peliculas o series agregadas</p>}
+              {movies && movies.map(({ movie }) => {
+                const { id, _id:idFilm, title = '', description = '', thumbnail ='' } = movie;
+                return <Film key={id} idList={idList} idFilm={id || idFilm} title={title} imgUrl={thumbnail} overview={description} isListPage></Film>;
               })}
             </div>
           </section>
