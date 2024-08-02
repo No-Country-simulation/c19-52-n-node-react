@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { getVariables } from "../config/dotenv.config.js"
+import { listsService } from '../repositories/index.js'
 
 const {JWT_KEY} = getVariables()
 
@@ -17,4 +18,26 @@ export const authToken = async (req, res, next) => {
        res.status(401).send({error: 'Unauthorized'})
     }
     next()
+}
+
+export const checkOwner = async (req, res, next) => {
+    try {
+        const user = req.session?.user
+        const {lid} = req.params
+
+        const list = await listsService.getOneList(lid)
+        if(!list){
+            return res.status(404).send({error: "List not found"})
+        }
+        
+        if (list.visibility === 'public') return next()
+
+        if(user.id !== list.owner){
+            console.error('403: Forbidden. User is not allowed to see this list.')
+            return res.status(403).send({error: 'Forbidden. User is not allowed to see this list.'})
+        }
+        next()
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
 }
