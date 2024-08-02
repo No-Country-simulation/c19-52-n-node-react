@@ -4,7 +4,7 @@ import './styles.scss';
 import { deleteFilmOFList } from '../../hooks/listsApi';
 
 
-export const Film = ({ idList='', idFilm='', isListPage = false, title = '', genreIds=[], imgUrl = '', overview= '+12 movies' }) => {
+export const Film = ({ idList='', idFilm='', isListPage = false, title = '', genreIds=[], imgUrl = '', overview= '+12 movies', owner }) => {
   const [showModal, setShowModal] = useState(false);
   const edit = async() => {
     if (!isListPage) {
@@ -26,7 +26,8 @@ export const Film = ({ idList='', idFilm='', isListPage = false, title = '', gen
       <img src={imgUrl}
         className="object-cover h-full w-full -z-10" alt="" />
       <div className="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-between hover-parent">
-        <button className="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80" onClick={edit}>
+        {!owner && <br></br>}
+        {owner && <button className="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80 " onClick={edit}>
           {!isListPage && 
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20"
             fill="currentColor">
@@ -40,7 +41,7 @@ export const Film = ({ idList='', idFilm='', isListPage = false, title = '', gen
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
           </svg>
           }
-        </button>
+        </button>}
         <div className="self-center flex flex-col items-center space-y-2">
           <span className="capitalize text-white font-medium drop-shadow-md">{title}</span>
         </div>

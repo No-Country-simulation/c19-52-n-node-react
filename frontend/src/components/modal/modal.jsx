@@ -10,7 +10,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   const [ lists, setLists] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); 
   const [listSelected, setListSelected] = useState('');
-  console.log('🚀 ~ file: modal.jsx:13 ~ listSelected:', listSelected)
 
   const getListOfUser = async () => {
     try {
@@ -32,7 +31,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
         title, description:overview, thumbnail: imgUrl, category: getGenerics(genreIds)
       });
       const { _id: idFilm } = payload;
-      console.log('🚀 ~ file: modal.jsx:34 ~ idFilm:', idFilm);
       await saveInList({ idFilm, idList: listSelected });
       window.location = '/';
     } catch (error) {

@@ -20,7 +20,6 @@ export const List = () => {
   const updateMovies = async () => {
     try {
       const { payload } = await getList({ idList });
-      console.log('🚀 ~ file: list.jsx:21 ~ payload:', payload);
       setVisibility(payload?.visibility);
       setOwner(payload?.owner);
       setMovies(payload?.movies);
@@ -103,7 +102,7 @@ export const List = () => {
               {movies?.length === 0 && <p className='font-semibold text-gray-700 text-base dark:text-white'>Aun no tienes peliculas o series agregadas</p>}
               {movies && movies.map(({ movie }) => {
                 const { id, _id:idFilm, title = '', description = '', thumbnail ='' } = movie;
-                return <Film key={id} idList={idList} idFilm={id || idFilm} title={title} imgUrl={thumbnail} overview={description} isListPage></Film>;
+                return <Film owner={idUser === owner} key={id} idList={idList} idFilm={id || idFilm} title={title} imgUrl={thumbnail} overview={description} isListPage></Film>;
               })}
             </div>
           </section>

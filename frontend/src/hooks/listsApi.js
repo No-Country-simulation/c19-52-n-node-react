@@ -95,6 +95,25 @@ export const getList = async ({ idList }) => {
   }
   return data;
 };
+
+
+export const getPublicLists = async () => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/public-lists/`;
+      
+  const response = await fetch(url, {
+    method: 'GET',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+      
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};
   
 
 export const deleteFilmOFList = async ({ idList, idFilm }) => {
