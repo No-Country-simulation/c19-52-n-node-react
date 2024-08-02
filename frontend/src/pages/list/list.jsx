@@ -20,7 +20,6 @@ export const List = () => {
   const updateMovies = async () => {
     try {
       const { payload } = await getList({ idList });
-      console.log('🚀 ~ file: list.jsx:21 ~ payload:', payload);
       setVisibility(payload?.visibility);
       setOwner(payload?.owner);
       setMovies(payload?.movies);

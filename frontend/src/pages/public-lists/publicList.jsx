@@ -11,7 +11,6 @@ export const PublicLists = () => {
   const getFilms = async () => {
     try {
       const { payload } = await getPublicLists();
-      console.log('🚀 ~ file: publicList.jsx:16 ~ payload:', payload);
       setLists(payload);
     } catch (error) {
       setError(error);
