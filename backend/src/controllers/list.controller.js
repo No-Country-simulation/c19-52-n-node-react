@@ -1,6 +1,11 @@
 import { listsService, moviesService, usersService } from "../repositories/index.js"
 
 export default class ListController{
+    getPublicList = async (req, res) => {
+        const lists = await listsService.getLists({visibility: 'public'})
+        return res.send({message: 'Ok', payload: lists})
+    }
+
     getListById = async (req, res) => {
         const {lid} = req.params
         const list = await listsService.getOneList(lid)

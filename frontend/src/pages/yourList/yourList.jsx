@@ -46,9 +46,9 @@ export const YourList = () => {
     if (lists.length === 0) {
       return <p className='font-semibold text-gray-700 text-base dark:text-white'>Aun no tienes listas agregadas</p>;
     }
-    return lists.map(({ _id: id, title, movies }) => {
+    return lists.map(({ _id: id, title, movies, owner }) => {
 
-      return (<ListCard key={id} idList={id} name={title} movies={movies} />);
+      return (<ListCard key={id} idList={id} name={title} movies={movies} owner={owner} />);
     });
   };
   useEffect(() => {

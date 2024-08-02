@@ -7,7 +7,7 @@ import Home from './pages/home/home.jsx';
 import List from './pages/list/list.jsx';
 import YourList from './pages/yourList/yourList.jsx';
 import Login from './pages/login/login.jsx';
-// import ProtectedRoute from './protectedRoute.jsx';
+import PublicLists from './pages/public-lists/publicList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/tus-listas',
     element: <YourList />,
+  },
+  {
+    path: '/listas-publicas',
+    element: <PublicLists />,
   },
   {
     path: '*',
