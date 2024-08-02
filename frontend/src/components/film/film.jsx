@@ -24,7 +24,6 @@ export const Film = ({ title = '', genreIds=[], imgUrl = '', overview= '+12 movi
               clipRule="evenodd" />
           </svg>
         </button>
-
         <div className="self-center flex flex-col items-center space-y-2">
           <span className="capitalize text-white font-medium drop-shadow-md">{title}</span>
         </div>

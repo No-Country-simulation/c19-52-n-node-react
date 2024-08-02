@@ -4,6 +4,7 @@ import { getCookie } from '../../utils/cookies';
 import './styles.scss';
 import { getYourLists, saveFilm, saveInList } from '../../hooks/listsApi';
 import { getGenerics } from '../../data/genre';
+
 export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, closeModal = ()=>{} }) {
   const isLogged = getCookie('access_token');
   const [ lists, setLists] = useState([]);
@@ -13,7 +14,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   const getListOfUser = async () => {
     try {
       const { payload } = await getYourLists();
-      console.log('🚀 ~ file: modal.jsx:13 ~ payload:', payload);
       setLists(payload);
       setIsLoaded(true);
     } catch (error) {
@@ -45,7 +45,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
       if(trueIdsArray.length > 0) {
         const { _id: idFilm } = payload;
         const [idList] = trueIdsArray;
-              
         await saveInList({ idFilm, idList });
       }
     } catch (error) {
@@ -90,7 +89,6 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
               <button onClick={() => closeModal()} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Entendido</button>
             </div>}
 
-            
           </div>
         </div>
 
