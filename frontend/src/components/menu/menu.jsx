@@ -130,7 +130,7 @@ export const Menu = () => {
           </svg>
           <span>Tus Listas</span>
         </a>
-        <div className="mt-8 text-gray-400/70  font-medium uppercase">Social</div>
+        {/* <div className="mt-8 text-gray-400/70  font-medium uppercase">Social</div>
         <a className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white "
           href="#">
           <svg className="dark:fill-white h-5 w-5 group-hover:fill-red-600 " xmlns="http://www.w3.org/2000/svg"
@@ -140,9 +140,9 @@ export const Menu = () => {
             </path>
           </svg>
           <span>Perfil</span>
-        </a>
+        </a> */}
         <div className="mt-8 text-gray-400/70  font-medium uppercase">General</div>
-        <a className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white "
+        {/* <a className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white "
           href="#">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:stroke-red-600" fill="none"
             viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -151,7 +151,7 @@ export const Menu = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <span>Ajustes</span>
-        </a>
+        </a> */}
         { !isLogged && 
         <a onClick={openModal} className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white"
           href="#">

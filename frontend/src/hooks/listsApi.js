@@ -132,3 +132,22 @@ export const deleteList = async ({ idList }) => {
   }
   return data;
 };
+
+
+export const changeVisibility = async ({ idList, visibility }) => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/${visibility}/${idList}`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+    
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};
