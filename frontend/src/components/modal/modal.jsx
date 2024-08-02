@@ -9,7 +9,7 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   const isLogged = getCookie('access_token');
   const [ lists, setLists] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); 
-  const [checklist, setChecklist] = useState({});
+  const [listSelected, setListSelected] = useState('');
 
   const getListOfUser = async () => {
     try {
@@ -26,27 +26,13 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   }
   
   const saveList = async () => {
-    const trueIdsArray = [];
-    const falseIdsArray = [];
-
-    Object.keys(checklist).forEach(key => {
-      if (checklist[key]) {
-        trueIdsArray.push(key);
-      } else {
-        falseIdsArray.push(key);
-      }
-    });
-
     try {
       const { payload } = await saveFilm({
         title, description:overview, thumbnail: imgUrl, category: getGenerics(genreIds)
       });
-
-      if(trueIdsArray.length > 0) {
-        const { _id: idFilm } = payload;
-        const [idList] = trueIdsArray;
-        await saveInList({ idFilm, idList });
-      }
+      const { _id: idFilm } = payload;
+      await saveInList({ idFilm, idList: listSelected });
+      window.location = '/';
     } catch (error) {
       console.error(error);
     }
@@ -56,8 +42,7 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
 
   
   const handleInputChange = (e) => {
-    const { name, checked } = e.target;
-    setChecklist({ ...checklist, [name]: checked });
+    setListSelected(e.target.value);
   };
   
   return (
@@ -68,17 +53,34 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
           <div className="main-container">
             
             {isLogged && 
-            <div className="checkbox-container">
+            <div className="select-container">
               <h1>Donde guardar: {title}</h1>
-              {lists.map(({ _id:id, title }) => {
+              <div className="custom-select-wrapper">
+                <select className="custom-select primary" name='list' onChange={handleInputChange}>
+                  {lists.map(({ _id:id, title }) => {
+                    return (<option key={id} value={id}>{title}</option>);
+                  })
+                  }
+                </select>
+              </div>
+
+
+              {/* {lists.map(({ _id:id, title }) => {
                 return (
                   <label key={id} className="checkbox-wrapper secondary">
-                    <input type="checkbox" name={id} value=''onChange={handleInputChange}/>
+                    <select id="genre" name='genre' onChange={handleInputChange}>
+                      <option key={id} value='wqow'>dsdssd</option>
+                      <option key={id} value='wqow'>dsdssd</option>
+                      <option key={id} value='wqow'>dsdssd</option>
+                      <option key={id} value='wqow'>dsdssd</option>
+                    
+                    </select>
+                     <input type="checkbox" name={id} value=''onChange={handleInputChange}/>
                     <span className="custom-checkbox"> </span>
                     {title}
                   </label>
                 );  
-              })}
+              })} */}
               <div className="input-wrapper primary">
                 <button onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Guardar</button>
               </div>

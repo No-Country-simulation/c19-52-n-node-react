@@ -96,3 +96,22 @@ export const getList = async ({ idList }) => {
   return data;
 };
   
+
+export const deleteFilmOFList = async ({ idList, idFilm }) => {
+  const url = `${import.meta.env.APP_API_URL}api/lists/${idList}/movie/${idFilm}`;
+
+  const response = await fetch(url, {
+    method: 'DELETE',
+    credentials :'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+    
+  if (!response.ok) {
+    throw new Error('Error response: '+data.message);
+  }
+  return data;
+};
+// /api/lists/{ListId}/movie/{movieId}
