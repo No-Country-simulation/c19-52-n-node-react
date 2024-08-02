@@ -16,9 +16,6 @@ export const Film = ({ idList='', idFilm='', isListPage = false, title = '', gen
       } catch (error) {
         console.error('🚀 error:', error);
       }
-      console.log('🚀 ~ file: film.jsx:7 ~ idFilm:', idFilm);
-      console.log('🚀 ~ file: film.jsx:7 ~ idList:', idList);
-      console.log('🚀 ~ file: film.jsx:11 ~ isListPage:', isListPage);
     }
   };
   const closeModal = () => {

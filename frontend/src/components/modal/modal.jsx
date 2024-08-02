@@ -10,6 +10,7 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
   const [ lists, setLists] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); 
   const [listSelected, setListSelected] = useState('');
+  console.log('🚀 ~ file: modal.jsx:13 ~ listSelected:', listSelected)
 
   const getListOfUser = async () => {
     try {
@@ -31,6 +32,7 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
         title, description:overview, thumbnail: imgUrl, category: getGenerics(genreIds)
       });
       const { _id: idFilm } = payload;
+      console.log('🚀 ~ file: modal.jsx:34 ~ idFilm:', idFilm);
       await saveInList({ idFilm, idList: listSelected });
       window.location = '/';
     } catch (error) {
@@ -57,32 +59,15 @@ export default function Modal({ title='hola mundo', overview, genreIds, imgUrl, 
               <h1>Donde guardar: {title}</h1>
               <div className="custom-select-wrapper">
                 <select className="custom-select primary" name='list' onChange={handleInputChange}>
+                  <option value='' selected disabled>Seleccione lista</option>
                   {lists.map(({ _id:id, title }) => {
                     return (<option key={id} value={id}>{title}</option>);
                   })
                   }
                 </select>
               </div>
-
-
-              {/* {lists.map(({ _id:id, title }) => {
-                return (
-                  <label key={id} className="checkbox-wrapper secondary">
-                    <select id="genre" name='genre' onChange={handleInputChange}>
-                      <option key={id} value='wqow'>dsdssd</option>
-                      <option key={id} value='wqow'>dsdssd</option>
-                      <option key={id} value='wqow'>dsdssd</option>
-                      <option key={id} value='wqow'>dsdssd</option>
-                    
-                    </select>
-                     <input type="checkbox" name={id} value=''onChange={handleInputChange}/>
-                    <span className="custom-checkbox"> </span>
-                    {title}
-                  </label>
-                );  
-              })} */}
               <div className="input-wrapper primary">
-                <button onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white">Guardar</button>
+                <button disabled={!listSelected} onClick={saveList} className="px-5 py-2.5 bg-red-600  hover:bg-red-700 rounded-lg text-center font-medium block text-white ">Guardar</button>
               </div>
             </div>}
             {!isLogged && 
