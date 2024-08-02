@@ -4,6 +4,9 @@ export default class ListController{
     getListById = async (req, res) => {
         const {lid} = req.params
         const list = await listsService.getOneList(lid)
+        if(!list){
+            return res.status(404).send({error: "List not found"})
+        }
         res.send({payload: list})
     }
 
