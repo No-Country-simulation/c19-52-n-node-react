@@ -2,10 +2,12 @@ import { useState } from 'react';
 import Modal from '../modal/modal';
 import './styles.scss';
 import { deleteFilmOFList } from '../../hooks/listsApi';
+import { useLocation } from 'react-router-dom';
 
 
 export const Film = ({ idList='', idFilm='', isListPage = false, title = '', genreIds=[], imgUrl = '', overview= '+12 movies', owner }) => {
   const [showModal, setShowModal] = useState(false);
+  const { pathname } = useLocation();
   const edit = async() => {
     if (!isListPage) {
       return setShowModal(true);
@@ -21,13 +23,17 @@ export const Film = ({ idList='', idFilm='', isListPage = false, title = '', gen
   const closeModal = () => {
     setShowModal(false);
   };
+  const section = pathname.split('/');
+  const currentSection = section[1] || 'inicio';
+  const show = currentSection === 'inicio' || currentSection === 'ver-lista';
+  
   return (
     <><div className="relative rounded-xl overflow-hidden imagediv">
       <img src={imgUrl}
         className="object-cover h-full w-full -z-10" alt="" />
       <div className="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-between hover-parent">
-        {!owner && <br></br>}
-        {owner && <button className="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80 " onClick={edit}>
+        {show && currentSection === 'inicio' || (!owner) && <br></br>}
+        {(owner ||  currentSection === 'inicio')  && <button className="p-2.5 bg-gray-800/80 bg-white rounded-lg text-white self-end hover:bg-red-600/80 " onClick={edit}>
           {!isListPage && 
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20"
             fill="currentColor">
