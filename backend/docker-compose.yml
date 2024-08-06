@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # TODO: esto expone en docker a pc??
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.back.rule=Host(`api-flicktracker.devcops.com.ar`)"
+      - "traefik.http.routers.back.entrypoints=web"
+      - "traefik.http.routers.back-secure.rule=Host(`api-flicktracker.devcops.com.ar`)"
+      - "traefik.http.routers.back-secure.entrypoints=websecure"
+      - "traefik.http.routers.back-secure.tls=true"
+      - "traefik.http.routers.back-secure.tls.certresolver=letsencrypt"
+networks:
+  traefik-net:
+    external: true

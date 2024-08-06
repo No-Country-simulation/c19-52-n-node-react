@@ -1,0 +1,10 @@
+- asegurate de correr "npm install" en ambos proyectos
+- npm run start para correr ambos proyectos
+- el comando magico para dockerizar sera:
+- `docker compose up -d --build --force-recreate`
+- correr esto dentro de carpeta front y back
+- esto crea un contenedor de docker del proyecto (react o node)
+- para esto usa los archivos dockerfile y docker-compose.yml con configs para cada proyecto
+- notese que las configuraciones en esos archivos fueron diseñados para correrlos con traefik
+- la network `traefik-net` no la tendras en local ...probablemente tendras que comentarlo y hacer modificaciones con respecto a como se corre el proyecto en docker enfocado para una vps que usara traefik
+- consultas y preguntas al 0800-machi

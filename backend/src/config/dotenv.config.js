@@ -1,9 +1,16 @@
 import dotenv from 'dotenv'
 
 export const getVariables = () => {
-    dotenv.config({
-        path: './.env'
-    })
+    if (process.env.NODE_ENV === 'production') {
+        dotenv.config({
+            path: './.env.prod'
+        })
+    } else {
+        dotenv.config({
+            path: './.env'
+        })
+    }
+    
 
     return {
         PORT: process.env.PORT,
